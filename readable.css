@@ -1,22 +1,40 @@
-/* Chữ dễ đọc hơn. Tải sau cùng: nâng sàn cho các chữ nhỏ nhất (8–11px), máy tính thì phóng nhẹ toàn trang.
-   `html body` đứng trước để thắng các luật cũ cùng độ ưu tiên trong styles/fixes/mobile.css mà không cần !important.
-   Điện thoại không dùng zoom (dễ lệch bề rộng trên một số trình duyệt) mà tăng thẳng cỡ chữ. */
-@media(min-width:1101px){html{zoom:1.12}}
+/* Cỡ chữ dễ đọc. Tải sau cùng.
+   - Thang cỡ chữ: `zoom` = mức nền theo loại màn hình (--base) × lựa chọn của người dùng (--ui: Vừa / Lớn / Rất lớn, lưu theo từng thiết bị).
+   - Điện thoại không dùng mức nền mà tăng thẳng cỡ chữ (zoom làm lệch bề rộng trên một số trình duyệt).
+   - `html body` đứng trước để thắng các luật cũ cùng độ ưu tiên trong styles/fixes/mobile.css mà không cần !important. */
+html{--ui:1;--base:1;zoom:calc(var(--base) * var(--ui))}
+html[data-font=lg]{--ui:1.12}
+html[data-font=xl]{--ui:1.25}
+@media(min-width:761px){html{--base:1.08}}
+@media(min-width:1101px){html{--base:1.15}}
+@media(min-width:1101px) and (max-width:1399px){html[data-font=xl]{--ui:1.12}} /* màn hình nhỏ: giữ bố cục không vỡ */
+
 html body .eyebrow,
-html body :is(.sidebar-label,.profile span,.donut-hole span,.calendar-head span,.chart-legend span,.comparison-legend span,.x-labels span,.y-labels span,.month-comparison small,.year-values span,.year-comparison>div:first-child span,.comparison-note,.overview-progress small,.optional,.budget-warning small,.empty-data-state small){font-size:12px}
-html body :is(.legend span,.legend strong,.budget-row-top,.budget-row-top span,.budget-row-top strong,.insight-header p,.expense-ranking small){font-size:12px}
-html body :is(.budget-row-top small,.expense-ranking b){font-size:11px}
-html body :is(.expense-ranking strong,.expense-ranking em){font-size:13px}
-html body .trend,html body .filter-count{font-size:11px}
-html body .budget-warning strong,html body .budget-warning button{font-size:13px}
+html body :is(.sidebar-label,.profile span,.donut-hole span,.calendar-head span,.chart-legend span,.comparison-legend span,.x-labels span,.y-labels span,.month-comparison small,.year-values span,.year-comparison>div:first-child span,.comparison-note,.overview-progress small,.optional,.budget-warning small,.empty-data-state small){font-size:13px}
+html body :is(.legend span,.legend strong,.budget-row-top,.budget-row-top span,.budget-row-top strong,.insight-header p,.expense-ranking small){font-size:13px}
+html body :is(.budget-row-top small,.expense-ranking b){font-size:12px}
+html body :is(.expense-ranking strong,.expense-ranking em){font-size:14px}
+html body .trend,html body .filter-count{font-size:12px}
+html body .budget-warning strong,html body .budget-warning button{font-size:14px}
 
 @media(max-width:760px){
-  html body :is(.card-label span,.summary-card p,.transaction-info small,.transaction-amount small,.stat-box small,.stat-box span,.budget-foot,.budget-foot b,.budget-numbers span,.budget-overview span,.overview-progress small,.budget-row-top,.budget-row-top span,.budget-row-top strong,.calendar-days span,.calendar-head span,.settings-tab,.today-button,.filter-button,.select-button,.transaction-actions button,.legend span,.legend strong,.panel-heading p,.insight-main p,.setting-switch small,.settings-description,.recurring-info small,.recurring-toggle,.settings-data-row small,.settings-callout p,.chart-legend span,.comparison-note,.eyebrow,.budget-warning small,.empty-data-state small,.x-labels span,.y-labels span,.year-values span,.month-comparison small,.donut-hole span){font-size:13px}
-  html body :is(.budget-row-top small,.expense-ranking b,.year-comparison>div:first-child span){font-size:12px}
-  html body :is(.transaction-info strong,.transaction-amount strong,.recurring-info strong,.recurring-item>b,.setting-switch strong,.settings-callout strong,.account-type h2,.donut-hole strong,.expense-ranking strong,.expense-ranking em,.budget-warning strong,.budget-warning button,.month-picker strong){font-size:14px}
-  html body .bottom-nav .nav-item small{font-size:11px}
-  html body .trend{font-size:11px}
-  html body .metric-value{font-size:18px}
+  html body :is(.card-label span,.summary-card p,.transaction-info small,.transaction-amount small,.stat-box small,.stat-box span,.budget-foot,.budget-foot b,.budget-numbers span,.budget-overview span,.overview-progress small,.budget-row-top,.budget-row-top span,.budget-row-top strong,.calendar-days span,.calendar-head span,.settings-tab,.today-button,.filter-button,.select-button,.transaction-actions button,.legend span,.legend strong,.panel-heading p,.insight-main p,.setting-switch small,.settings-description,.recurring-info small,.recurring-toggle,.settings-data-row small,.settings-callout p,.chart-legend span,.comparison-note,.eyebrow,.budget-warning small,.empty-data-state small,.x-labels span,.y-labels span,.year-values span,.month-comparison small,.donut-hole span,.page-heading .muted,.account-type p,.budget-card-head p,.account-change){font-size:14px}
+  html body :is(.budget-row-top small,.expense-ranking b,.year-comparison>div:first-child span,.trend,.filter-count){font-size:12px}
+  html body :is(.transaction-info strong,.transaction-amount strong,.recurring-info strong,.recurring-item>b,.setting-switch strong,.settings-callout strong,.account-type h2,.donut-hole strong,.expense-ranking strong,.expense-ranking em,.budget-warning strong,.budget-warning button,.month-picker strong,.secondary-button,.text-button){font-size:15px}
+  html body :is(.primary-button,.budget-card-head h2){font-size:16px}
+  html body .panel h2{font-size:18px}
+  html body .page-heading h1{font-size:28px}
+  html body .metric-value,html body .stat-box strong,html body .budget-numbers strong,html body .budget-overview strong{font-size:20px}
+  html body .account-card-main>strong,html body .account-total strong{font-size:24px}
+  /* ô nhập ≥16px: dễ đọc hơn và iPhone không tự phóng to trang khi chạm vào ô */
+  html body :is(.form-grid input,.form-grid select,.modal-grid input,.modal-grid select,.search-box input,.add-category-row input){font-size:16px}
+  html body .amount-field input{font-size:26px}
+  html body .modal h2{font-size:22px}
+  /* Số tiền lớn nằm trong thẻ hẹp: khi phóng chữ thì giảm cỡ gốc để cỡ hiển thị không đổi, tránh bị cắt/xuống dòng. */
+  html[data-font=lg] body :is(.metric-value,.stat-box strong,.budget-numbers strong,.budget-overview strong){font-size:18px}
+  html[data-font=xl] body :is(.metric-value,.stat-box strong,.budget-numbers strong,.budget-overview strong){font-size:16px}
+  html[data-font=lg] body :is(.account-card-main>strong,.account-total strong){font-size:22px}
+  html[data-font=xl] body :is(.account-card-main>strong,.account-total strong){font-size:19px}
 }
 
 /* Logo ảnh thay cho ô chữ ₫ cũ. */
@@ -65,3 +83,18 @@ html body :is(.calendar-summary span,.donut-hole span,.empty-data-state small,.e
 html body .eyebrow{color:#357a74}
 html body .positive-text{color:#27805a}
 html body .comparison-panel .panel-heading>strong{color:#087a6f}
+
+/* Chọn cỡ chữ trong Cài đặt. */
+.font-choices{display:flex;gap:10px;flex-wrap:wrap}
+.font-choice{display:flex;flex-direction:column;align-items:center;gap:4px;min-width:96px;padding:12px 18px;border:1px solid var(--line);border-radius:12px;background:#fff;color:#153943;font-weight:700;font-size:14px}
+.font-choice span{font-weight:800;line-height:1.1}
+.font-choice:hover{border-color:#b7ded7}
+.font-choice.active{border-color:#16b09d;background:#dcf7f0;color:#07756c;box-shadow:0 0 0 2px rgba(22,176,157,.18)}
+/* Điện thoại rất hẹp (≤360px): số tiền trong thẻ 2 cột nhỏ bớt để không bị cắt. */
+@media(max-width:360px){
+  html body :is(.metric-value,.stat-box strong,.budget-numbers strong,.budget-overview strong){font-size:17px}
+  html[data-font=lg] body :is(.metric-value,.stat-box strong,.budget-numbers strong,.budget-overview strong){font-size:15px}
+  html[data-font=xl] body :is(.metric-value,.stat-box strong,.budget-numbers strong,.budget-overview strong){font-size:13px}
+}
+/* Máy tính ở mức "Rất lớn": 4 thẻ thống kê không đủ chỗ trên màn hình dưới 1700px. */
+@media(min-width:1400px) and (max-width:1699px){html[data-font=xl] .stats-cards{grid-template-columns:repeat(2,minmax(0,1fr))}}
