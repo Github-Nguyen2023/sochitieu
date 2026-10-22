@@ -1,0 +1,67 @@
+/* Chữ dễ đọc hơn. Tải sau cùng: nâng sàn cho các chữ nhỏ nhất (8–11px), máy tính thì phóng nhẹ toàn trang.
+   `html body` đứng trước để thắng các luật cũ cùng độ ưu tiên trong styles/fixes/mobile.css mà không cần !important.
+   Điện thoại không dùng zoom (dễ lệch bề rộng trên một số trình duyệt) mà tăng thẳng cỡ chữ. */
+@media(min-width:1101px){html{zoom:1.12}}
+html body .eyebrow,
+html body :is(.sidebar-label,.profile span,.donut-hole span,.calendar-head span,.chart-legend span,.comparison-legend span,.x-labels span,.y-labels span,.month-comparison small,.year-values span,.year-comparison>div:first-child span,.comparison-note,.overview-progress small,.optional,.budget-warning small,.empty-data-state small){font-size:12px}
+html body :is(.legend span,.legend strong,.budget-row-top,.budget-row-top span,.budget-row-top strong,.insight-header p,.expense-ranking small){font-size:12px}
+html body :is(.budget-row-top small,.expense-ranking b){font-size:11px}
+html body :is(.expense-ranking strong,.expense-ranking em){font-size:13px}
+html body .trend,html body .filter-count{font-size:11px}
+html body .budget-warning strong,html body .budget-warning button{font-size:13px}
+
+@media(max-width:760px){
+  html body :is(.card-label span,.summary-card p,.transaction-info small,.transaction-amount small,.stat-box small,.stat-box span,.budget-foot,.budget-foot b,.budget-numbers span,.budget-overview span,.overview-progress small,.budget-row-top,.budget-row-top span,.budget-row-top strong,.calendar-days span,.calendar-head span,.settings-tab,.today-button,.filter-button,.select-button,.transaction-actions button,.legend span,.legend strong,.panel-heading p,.insight-main p,.setting-switch small,.settings-description,.recurring-info small,.recurring-toggle,.settings-data-row small,.settings-callout p,.chart-legend span,.comparison-note,.eyebrow,.budget-warning small,.empty-data-state small,.x-labels span,.y-labels span,.year-values span,.month-comparison small,.donut-hole span){font-size:13px}
+  html body :is(.budget-row-top small,.expense-ranking b,.year-comparison>div:first-child span){font-size:12px}
+  html body :is(.transaction-info strong,.transaction-amount strong,.recurring-info strong,.recurring-item>b,.setting-switch strong,.settings-callout strong,.account-type h2,.donut-hole strong,.expense-ranking strong,.expense-ranking em,.budget-warning strong,.budget-warning button,.month-picker strong){font-size:14px}
+  html body .bottom-nav .nav-item small{font-size:11px}
+  html body .trend{font-size:11px}
+  html body .metric-value{font-size:18px}
+}
+
+/* Logo ảnh thay cho ô chữ ₫ cũ. */
+.brand-logo{display:block;width:34px;height:34px;border-radius:10px;box-shadow:0 7px 18px rgba(16,169,149,.35);flex-shrink:0}
+@media(max-width:760px){.mobile-brand .brand-logo{width:28px;height:28px;border-radius:8px}}
+
+/* ---- Dễ nhìn trên điện thoại và máy tính bảng: màu chữ đủ đậm, thanh điều hướng rõ ràng ---- */
+/* Chữ phụ trước đây 2,5–3,5:1 (rất nhạt); nâng lên khoảng 5:1. */
+html body :is(.muted,.summary-card p,.panel-heading p,.transaction-info small,.transaction-amount small,.calendar-head span,.x-labels span,.y-labels span,.month-comparison small,.chart-legend span,.comparison-legend span,.comparison-note,.year-values span,.year-comparison>div:first-child span,.settings-description,.account-type p,.budget-card-head p,.budget-numbers span,.budget-row-top small,.budget-foot,.empty-data-state,.empty-state,.card-label>span:not(.metric-icon):not(.trend),.stat-box>span,.insight-header p,.setting-switch small,.settings-data-row small,.settings-callout p,.legend span,.expense-ranking small,.optional,.account-change:not(.positive-text),.stat-box small:not(.positive-text):not(.negative-text),.round-arrow,.more-button,.icon-button,.search-box>span,.transaction-actions button,.year-comparison>div>strong+span){color:#587176}
+html body :is(.settings-tab,.secondary-button,.today-button,.filter-button,.select-button,.form-grid label,.modal-grid label,.overview-progress small){color:#4a6268}
+html body .settings-tab.active{color:#08786f}
+html body .eyebrow{color:#3d807a}
+html body .text-button{color:#0a7f74}
+html body .positive-text{color:#2d8a5f}html body .negative-text{color:#b45240}
+html body .amount-income{color:#1f7f5c}
+html body .trend.positive{color:#2f7d59}html body .trend.negative{color:#b5543d}html body .trend.neutral{color:#55707a}
+html body .year-values span:last-child{color:#3f6fbf}
+
+.more-list{display:grid;gap:10px;margin-top:20px}
+.more-item{display:flex;align-items:center;gap:14px;width:100%;padding:16px;border:1px solid var(--line);border-radius:12px;background:#fff;color:#153943;font-size:16px;font-weight:700;text-align:left}
+.more-item:hover{border-color:#b7ded7;background:#f2fbf8}
+.more-item .nav-icon{font-size:24px;width:30px;text-align:center;color:#0a7f74}
+.more-item small{display:block;margin-top:3px;font-size:13px;font-weight:400;color:#587176}
+
+/* Điện thoại: thanh điều hướng dưới đáy. Màu cũ (#aec8ca / #eafff9) dành cho menu tối nên gần như vô hình trên nền trắng. */
+@media(max-width:760px){
+  html body .bottom-nav{height:76px}
+  html body .bottom-nav .nav-item{color:#4a6268;width:64px;padding:8px 2px;gap:3px;border-radius:12px;box-shadow:none}
+  html body .bottom-nav .nav-item span{font-size:23px;line-height:24px}
+  html body .bottom-nav .nav-item small{font-size:12px;font-weight:700;line-height:1.15;color:inherit}
+  html body .bottom-nav .nav-item.active{color:#07756c;background:#dcf7f0}
+  /* 5 mục đều nhau; nút ＋ nổi ở góc phải phía trên thanh. */
+  html body .bottom-nav .nav-item{flex:1;width:auto;min-width:0}
+  html body .bottom-nav .fab{position:fixed;right:16px;bottom:calc(90px + env(safe-area-inset-bottom));width:56px;height:56px;margin:0;font-size:30px;z-index:9;box-shadow:0 8px 20px rgba(11,143,134,.35)}
+  html body .main-content{padding-bottom:150px}
+}
+
+/* Máy tính bảng (761–1100px): cột menu trái có tên dưới mỗi biểu tượng, chữ sáng rõ trên nền tối. */
+@media(min-width:761px) and (max-width:1100px){
+  html body .sidebar{width:90px;padding:22px 8px 18px}
+  html body .sidebar .nav-item{flex-direction:column;gap:5px;font-size:12px;font-weight:600;line-height:1.15;text-align:center;padding:10px 2px;color:#d3e8ea}
+  html body .sidebar .nav-item .nav-icon{font-size:23px}
+  html body .sidebar .nav-item.active{color:#ffffff}
+}
+html body :is(.calendar-summary span,.donut-hole span,.empty-data-state small,.expense-ranking b){color:#587176}
+html body .eyebrow{color:#357a74}
+html body .positive-text{color:#27805a}
+html body .comparison-panel .panel-heading>strong{color:#087a6f}

@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#0d9488" />
+    <title>Sổ Chi Tiêu — Quản lý tài chính</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="icon" type="image/svg+xml" href="logo.svg" />
+    <link rel="apple-touch-icon" href="apple-touch-icon.png" />
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="features.css" />
+    <link rel="stylesheet" href="theme.css" />
+    <link rel="stylesheet" href="fixes.css" />
+    <link rel="stylesheet" href="mobile.css" />
+    <link rel="stylesheet" href="readable.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar" aria-label="Điều hướng chính">
+        <div class="brand"><img class="brand-logo" src="logo.svg" alt="" width="34" height="34" /><span>Sổ Chi Tiêu</span></div>
+        <div class="sidebar-label">TỔNG QUAN</div>
+        <nav class="side-nav">
+          <button class="nav-item active" data-action="view" data-view="home" title="Trang chủ"><span class="nav-icon">⌂</span>Trang chủ</button>
+          <button class="nav-item" data-action="view" data-view="transactions" title="Giao dịch"><span class="nav-icon">↔</span>Giao dịch</button>
+          <button class="nav-item" data-action="view" data-view="stats" title="Thống kê"><span class="nav-icon">▥</span>Thống kê</button>
+          <button class="nav-item" data-action="view" data-view="budgets" title="Ngân sách"><span class="nav-icon">◎</span>Ngân sách</button>
+        </nav>
+        <div class="sidebar-label">QUẢN LÝ</div>
+        <nav class="side-nav">
+          <button class="nav-item" data-action="view" data-view="accounts" title="Tài khoản"><span class="nav-icon">▣</span>Tài khoản</button>
+          <button class="nav-item" data-action="view" data-view="settings" title="Cài đặt"><span class="nav-icon">⚙</span>Cài đặt</button>
+        </nav>
+        <div class="sidebar-footer"><div class="profile"><div class="avatar" id="sideAvatar"></div><div><strong id="sideName"></strong></div></div></div>
+      </aside>
+
+      <main class="main-content">
+        <header class="topbar">
+          <div class="mobile-brand"><img class="brand-logo" src="logo.svg" alt="" width="34" height="34" /><span>Sổ Chi Tiêu</span></div>
+          <div class="breadcrumb"><span>Không gian cá nhân</span><span class="crumb-separator">/</span><strong id="pageTitle">Trang chủ</strong></div>
+          <div class="top-actions"><button class="icon-button" data-action="view" data-view="budgets" aria-label="Cảnh báo ngân sách">♢<span class="notification-dot" id="bellDot" hidden></span></button><div class="top-avatar" id="topAvatar"></div></div>
+        </header>
+
+        <section id="homeView" class="view active-view">
+          <div class="page-heading"><div><p class="eyebrow" id="todayLabel"></p><h1 id="greeting"></h1><p class="muted" id="homeSubtitle"></p></div><button class="primary-button" data-action="add-tx"><span>＋</span> Thêm giao dịch</button></div>
+          <div class="month-picker" data-month-picker></div>
+          <div class="budget-warning" data-storage-warning hidden></div>
+          <div class="budget-warning" data-budget-warning="home" hidden></div>
+          <div class="summary-grid summary-grid-financial">
+            <article class="summary-card income"><div class="card-label"><span class="metric-icon">↗</span><span>Tổng thu nhập</span><span class="trend" id="incomeTrend"></span></div><strong class="metric-value" id="incomeValue"></strong><p>So với tháng trước</p><div class="sparkline" id="incomeSpark"></div></article>
+            <article class="summary-card expense"><div class="card-label"><span class="metric-icon">↘</span><span>Tổng chi tiêu</span><span class="trend" id="expenseTrend"></span></div><strong class="metric-value" id="expenseValue"></strong><p>So với tháng trước</p><div class="sparkline expense-spark" id="expenseSpark"></div></article>
+            <article class="summary-card balance"><div class="card-label"><span class="metric-icon">=</span><span>Còn lại trong tháng</span><span class="trend" id="balanceTrend"></span></div><strong class="metric-value" id="balanceValue"></strong><p>Thu nhập - Chi tiêu</p><div class="balance-line"><span id="balanceBar"></span></div></article>
+          </div>
+          <div class="dashboard-grid">
+            <article class="panel spending-panel"><div class="panel-heading"><div><h2>Chi tiêu theo danh mục</h2><p id="spendingSub"></p></div></div><div class="donut-row" id="spendingBody"></div></article>
+            <article class="panel budget-panel"><div class="panel-heading"><div><h2>Hạn mức chi theo nhóm</h2><p>Nhóm sát hạn mức nhất</p></div><button class="text-button" data-action="view" data-view="budgets">Xem tất cả →</button></div><div class="budget-list" id="homeBudgets"></div></article>
+          </div>
+          <div class="dashboard-grid lower-grid">
+            <article class="panel transactions-panel"><div class="panel-heading"><div><h2>Giao dịch gần đây</h2><p>Các khoản thu chi mới nhất trong tháng</p></div><button class="text-button" data-action="view" data-view="transactions">Xem tất cả →</button></div><div id="recentTransactions" class="transaction-list"></div></article>
+            <article class="panel insight-panel" id="insight"></article>
+          </div>
+        </section>
+
+        <section id="transactionsView" class="view">
+          <div class="page-heading"><div><p class="eyebrow">THEO DÕI DÒNG TIỀN</p><h1>Giao dịch</h1><p class="muted">Tìm kiếm, lọc và quản lý mọi khoản thu chi.</p></div><div class="heading-actions"><button class="secondary-button export-button" data-action="export-csv">↓ Xuất CSV</button><button class="primary-button" data-action="add-tx"><span>＋</span> Thêm giao dịch</button></div></div>
+          <div class="month-picker" data-month-picker></div>
+          <div class="filter-bar">
+            <div class="search-box"><span>⌕</span><input id="transactionSearch" placeholder="Tìm theo nội dung, danh mục..." /></div>
+            <button class="filter-button" data-action="toggle-filter">☷ Bộ lọc <span class="filter-count" id="filterCount" hidden></span></button>
+            <div class="filter-popover" id="filterPopover"><label>Loại giao dịch<select id="filterType"><option value="all">Tất cả</option><option value="expense">Chi tiêu</option><option value="income">Thu nhập</option><option value="transfer">Chuyển tiền</option></select></label><label>Danh mục<select id="filterCategory"></select></label></div>
+          </div>
+          <div class="transaction-page-grid">
+            <article class="panel all-transactions"><div class="panel-heading"><div><h2>Tất cả giao dịch</h2><p id="transactionCount"></p></div></div><div id="allTransactions" class="transaction-list full-list"></div></article>
+            <article class="panel calendar-panel"><div class="panel-heading"><div><h2>Lịch chi tiêu</h2><p id="calendarSub"></p></div></div><div class="calendar"><div class="calendar-head"><span>T2</span><span>T3</span><span>T4</span><span>T5</span><span>T6</span><span>T7</span><span>CN</span></div><div class="calendar-days" id="calendarDays"></div></div><div class="calendar-summary"><div><span class="dot teal"></span><span>Đã chi</span><strong id="calExpense"></strong></div><div><span class="dot green"></span><span>Đã thu</span><strong id="calIncome"></strong></div></div></article>
+          </div>
+          <article class="panel recurring-panel"><div class="panel-heading"><div><h2>Giao dịch định kỳ</h2><p>Khoản chi lặp lại hàng tháng — bấm “Ghi nhận” khi đến hạn.</p></div><button class="secondary-button" data-action="rec-add">＋ Thêm định kỳ</button></div><div id="recurringList" class="recurring-list"></div></article>
+        </section>
+
+        <section id="statsView" class="view">
+          <div class="page-heading"><div><p class="eyebrow">PHÂN TÍCH TÀI CHÍNH</p><h1>Thống kê</h1><p class="muted">Hiểu rõ thói quen chi tiêu của bạn.</p></div></div>
+          <div class="month-picker" data-month-picker></div>
+          <div class="stats-cards" id="statCards"></div>
+          <div class="dashboard-grid stats-grid">
+            <article class="panel"><div class="panel-heading"><div><h2>Xu hướng dòng tiền</h2><p>Thu nhập và chi tiêu 6 tháng gần nhất</p></div></div><div class="line-chart" id="lineChart"></div><div class="chart-legend"><span><i class="dot green"></i> Thu nhập</span><span><i class="dot blue"></i> Chi tiêu</span></div></article>
+            <article class="panel top-expenses"><div class="panel-heading"><div><h2>Khoản chi lớn nhất</h2><p id="topSub"></p></div></div><div class="expense-ranking" id="ranking"></div></article>
+          </div>
+          <div class="comparison-grid" id="comparisons"></div>
+        </section>
+
+        <section id="budgetsView" class="view">
+          <div class="page-heading"><div><p class="eyebrow">KẾ HOẠCH CHI TIÊU</p><h1>Hạn mức chi theo danh mục</h1><p class="muted">Đặt mức chi tối đa mỗi tháng cho từng nhóm để chủ động theo dõi.</p></div><div class="heading-actions"><button class="secondary-button" data-action="total-budget">◎ Tổng ngân sách tháng</button><button class="primary-button" data-action="budget-add"><span>＋</span> Thêm hạn mức nhóm</button></div></div>
+          <div class="month-picker" data-month-picker></div>
+          <div class="budget-warning" data-budget-warning="budgets" hidden></div>
+          <div class="budget-overview panel" id="budgetOverview"></div>
+          <div class="budget-cards" id="budgetCards"></div>
+        </section>
+
+        <section id="accountsView" class="view">
+          <div class="page-heading"><div><p class="eyebrow">TÀI SẢN & DÒNG TIỀN</p><h1>Tài khoản</h1><p class="muted">Số dư được tính từ số dư ban đầu và mọi giao dịch.</p></div><button class="primary-button" data-action="account-add"><span>＋</span> Thêm tài khoản</button></div>
+          <div class="account-total panel"><span>Tổng số dư</span><strong id="accountTotal"></strong><p>Cộng tất cả tài khoản</p></div>
+          <div class="account-grid" id="accountList"></div>
+        </section>
+
+        <section id="settingsView" class="view">
+          <div class="page-heading"><div><p class="eyebrow">TÙY CHỈNH ỨNG DỤNG</p><h1>Cài đặt</h1><p class="muted">Quản lý danh mục, hiển thị và dữ liệu của bạn.</p></div></div>
+          <div class="budget-warning" data-storage-warning hidden></div>
+          <div class="settings-layout">
+            <div class="settings-menu">
+              <button class="settings-tab active" data-action="settings-tab" data-tab="profile">Thông tin cá nhân</button>
+              <button class="settings-tab" data-action="settings-tab" data-tab="categories">Danh mục</button>
+              <button class="settings-tab" data-action="settings-tab" data-tab="notify">Thông báo</button>
+              <button class="settings-tab" data-action="settings-tab" data-tab="data">Dữ liệu & sao lưu</button>
+            </div>
+            <div class="panel settings-content" id="settingsContent"></div>
+          </div>
+        </section>
+      </main>
+      <nav class="bottom-nav"><button class="nav-item active" data-action="view" data-view="home"><span>⌂</span><small>Trang chủ</small></button><button class="nav-item" data-action="view" data-view="transactions"><span>↔</span><small>Giao dịch</small></button><button class="nav-item" data-action="view" data-view="stats"><span>▥</span><small>Thống kê</small></button><button class="nav-item" data-action="view" data-view="budgets"><span>◎</span><small>Ngân sách</small></button><button class="nav-item" data-action="more-menu"><span>☰</span><small>Quản lý</small></button><button class="fab" data-action="add-tx" aria-label="Thêm giao dịch">＋</button></nav>
+    </div>
+
+    <div class="modal-backdrop" id="transactionModal"><div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <div class="modal-head"><div><p class="eyebrow" id="modalEyebrow">GIAO DỊCH MỚI</p><h2 id="modalTitle">Thêm giao dịch</h2></div><button class="close-modal" data-action="close-modal" aria-label="Đóng">×</button></div>
+      <div class="transaction-type"><button class="type-button active" data-action="tx-type" data-type="expense">Chi tiêu</button><button class="type-button" data-action="tx-type" data-type="income">Thu nhập</button><button class="type-button" data-action="tx-type" data-type="transfer">Chuyển tiền</button></div>
+      <label class="amount-field"><span>Số tiền</span><div><input id="txAmount" data-money inputmode="numeric" placeholder="0" /><b>₫</b></div></label>
+      <div class="modal-grid">
+        <label id="txCategoryWrap">Danh mục<select id="txCategory"></select></label>
+        <label><span id="txAccountLabel">Tài khoản</span><select id="txAccount"></select></label>
+        <label id="txToWrap" hidden>Đến tài khoản<select id="txTo"></select></label>
+        <label>Nội dung<input id="txNote" placeholder="Ví dụ: Bữa trưa" /></label>
+        <label>Ngày giao dịch<input id="txDate" type="date" min="2000-01-01" max="2099-12-31" /></label>
+        <label>Địa điểm <span class="optional">(không bắt buộc)</span><input id="txLocation" placeholder="Ví dụ: Vincom" /></label>
+        <label>Người liên quan <span class="optional">(không bắt buộc)</span><input id="txRelated" placeholder="Ví dụ: Gia đình" /></label>
+      </div>
+      <div class="modal-footer"><button class="secondary-button" data-action="close-modal">Hủy</button><button class="primary-button" data-action="save-tx">Lưu giao dịch</button></div>
+    </div></div>
+
+    <div class="modal-backdrop" id="moreModal"><div class="modal" role="dialog" aria-modal="true" aria-label="Menu">
+      <div class="modal-head"><div><p class="eyebrow">TÀI KHOẢN & CÀI ĐẶT</p><h2>Quản lý</h2></div><button class="close-modal" data-action="close-modal" aria-label="Đóng">×</button></div>
+      <div class="more-list">
+        <button class="more-item" data-action="view" data-view="accounts"><span class="nav-icon">▣</span><div>Tài khoản<small>Số dư các ví và ngân hàng</small></div></button>
+        <button class="more-item" data-action="view" data-view="settings"><span class="nav-icon">⚙</span><div>Cài đặt<small>Danh mục, sao lưu, khôi phục, dọn dẹp dữ liệu</small></div></button>
+      </div>
+    </div></div>
+
+    <div class="modal-backdrop" id="formModal"><div class="modal" role="dialog" aria-modal="true"></div></div>
+    <input type="file" id="restoreFile" accept="application/json,.json" hidden />
+    <div class="toast" id="toast"><span>✓</span><div><strong id="toastTitle"></strong><small id="toastMessage"></small></div></div>
+    <script src="app.js"></script>
+  </body>
+</html>
